@@ -6,6 +6,7 @@ import OwnerReviewDetailPage from './pages/OwnerReviewDetailPage';
 import CommunityPage from './pages/CommunityPage';
 import PostDetailPage from './pages/PostDetailPage';
 import MyPage from './pages/MyPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path = "/community" element = {<CommunityPage />} />
                 <Route path = "/community/:id" element = {<PostDetailPage />} />
                 <Route path = "/mypage" element={<MyPage />} />
+                <Route path = "/login" element={<LoginPage />} />
             </Route>
         </Routes>
     );
