@@ -1,6 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 function Layout() {
+    const { user, loading, logout } = useAuth();
+    const navigate = useNavigate();
+
+    async function handleLogout() {
+        await logout();
+        navigate('/');
+    }
+    
     return (
         <>
             <header className="site-header">
@@ -18,8 +28,17 @@ function Layout() {
 
                     <div className="spacer" />
 
-                    {/* 로그인 상태 표시는 다음 작업 */}
-                    <span className="meta">로그인 필요</span>
+                    {/* 확인 중일 땐 아무것도 안 보여준다 */}
+                    {!loading && (
+                        user ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                <span style={{ fontSize: 14 }}>{user.username}</span>
+                                <button onClick={handleLogout}>로그아웃</button>
+                            </div>
+                        ) : (
+                            <Link to="/login" className="meta">로그인</Link>
+                        )
+                    )}
                 </div>
             </header>
 

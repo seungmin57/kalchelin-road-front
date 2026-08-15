@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiFetch } from '../api';
+import { useAuth } from '../AuthContext';
 
 function LoginPage() {
     const [username, setUsername ] = useState('');
     const [password, setPassword ] = useState('');
     const [error, setError] = useState(null);
     const [submitting, setSubmitting] = useState(false);
+    const { login } = useAuth();
     const navigate = useNavigate();
     
     async function handleSubmit(e) {
@@ -15,12 +17,7 @@ function LoginPage() {
         setSubmitting(true);
 
         try {
-            await apiFetch('/api/login', {
-                method: 'POST',
-                // formLogin은 JSON이 아니라 폼 형식을 받는다
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ username, password }),
-            });
+            await login(username, password);   
             navigate('/');      // 성공하면 홈으로
         } catch (err) {
             setError(err.message)   // 백엔드가 준 401 메시지가 그대로 들어온다
