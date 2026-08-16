@@ -15,11 +15,12 @@ function Layout() {
         <>
             <header className="site-header">
                 <div className="inner">
-                    <div>
-                        <div className="logo">🍜 칼슐랭로드</div>
-                        <div className="tagline">칼국수를 좋아하는 사람들의 공간</div>
-                    </div>
-
+                    <Link to='/' className="logo-link">
+                        <div>
+                            <div className="logo">🍜 칼슐랭로드</div>
+                            <div className="tagline">칼국수를 좋아하는 사람들의 공간</div>
+                        </div>
+                    </Link>
                     <nav>
                         <NavLink to="/owner-reviews">칼슐랭로드</NavLink>
                         <NavLink to="/community">Kal's 로그</NavLink>
