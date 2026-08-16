@@ -14,13 +14,21 @@ export async function apiFetch(path, options = {}) {
 
     if (!res.ok) {
         let message = `서버 오류(${res.status})`;
+        let fieldErrors = null;
         try {
             const body = await res.json();
             if (body.message) message = body.message;
+            if (Array.isArray(body.errors)) {
+                fieldErrors = Object.fromEntries(
+                body.errors.map(e => [e.field, e.reason])
+                );
+        } 
         } catch {
             // 본문이 json이 아니면 기본 메시지 유지
         }
-        throw new Error(message);
+        const error = new Error(message);
+        error.fieldErrors = fieldErrors;
+        throw error;
     }
 
     // 204, 또는 200인데 body가 비어 있는 경우(로그인 성공 읍답)를 함께 처리
